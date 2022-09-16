@@ -1,0 +1,29 @@
+.contact-page{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito', sans-serif;
+}
+.contact-page ul li{
+    list-style-type: circle;
+}
+.contact-page p{
+    font-style: italic;
+    text-align: justify;
+}
+.contact-page input, .contact-page textarea{
+    border: 2px solid rgb(14, 146, 223);
+}
+.contact-page input:active,
+.contact-page textarea:active{
+    border: none;
+}
+.info{
+    border-radius: 10px;
+    box-shadow: 5px 15px 10px rgba(104, 103, 103, 0.5);
+}
+.common{
+    border-radius: 10px;
+    box-shadow: 5px 15px 10px rgba(104, 103, 103, 0.5);
+    height: auto;
+}

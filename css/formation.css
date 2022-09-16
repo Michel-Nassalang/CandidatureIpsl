@@ -1,0 +1,13 @@
+.container .entete h2{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 3px solid rgb(14, 146, 223);
+}
+.container .row p{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align:justify;
+}

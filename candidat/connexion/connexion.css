@@ -1,0 +1,108 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lemonada&display=swap'); */
+@import url('../../fonts/Nunito-Bold.ttf');
+@import url('../../fonts/Lemonada-Regular.ttf');
+
+body {
+    margin: 0;
+    padding: 0;
+    background: url('../../images/pakatac.jpg');
+    background-size: cover;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+}
+
+
+form {
+    position: relative;
+    height: max-content;
+    justify-content: center;
+    align-content: center;
+    margin: 15vh 0;
+    background: rgba(96, 99, 97, 0.603);
+    border-radius: 5px;
+    padding: 10vh 5vh 2.5vw;
+}
+.connex{
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+input.form-control, select.form-control{
+    background-color: transparent;
+    color: transparent;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.829);
+    border: 3px solid rgb(54, 174, 243);
+    font-family: 'Nunito', sans-serif;
+}
+input.form-control:focus,
+select.form-control:focus{
+    border: 0;
+}
+input.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.829);
+}
+input.form-control:focus::placeholder{
+    color: rgba(134, 130, 130, 0.7)
+}
+.submit {
+    width: min-content;
+    color: white;
+    background: rgb(14, 146, 223);
+    border: 2px solid rgb(14, 146, 223);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-style: italic;
+}
+.erreur_code,
+.success_code {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 5vh;
+    color: white;
+    border-radius: 5px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.erreur_code {
+    background: rgba(190, 55, 55, 0.678);
+}
+
+.success_code {
+    background: rgba(130, 231, 14, 0.842);
+}
+
+.erreur {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    margin-top: 5vh;
+    background: rgba(190, 55, 55, 0.678);
+    border-radius: 5px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.form .box{
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+}
+.form .act {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}

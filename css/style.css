@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lemonada&display=swap');
+@import url('../fonts/Nunito-Bold.ttf');
+@import url('../fonts/Lemonada-Regular.ttf');
+
+body{
+    margin: 0;
+}
+header{
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    background-color: #fff;
+    position:static;
+}
+
+li{
+    list-style:none;
+    text-decoration:none;
+}
+li a{
+    position: relative;
+    text-decoration:none;
+    margin: 5px;
+    padding: 5px;
+    font-family: 'Nunito', sans-serif;
+    font-style: italic;
+    overflow: hidden;
+    color: rgb(14, 146, 223);
+}
+li a::before {
+    position: absolute;
+    content: '';
+    bottom: 0;
+    border-bottom: 0.5vw solid rgb(14, 146, 223);
+    width: 0;
+    transition: 0.5s ease-in-out;
+}
+
+li a:hover::before {
+    width: 100%;
+    transition: 1s ease-in-out;
+}

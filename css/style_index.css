@@ -1,0 +1,137 @@
+section {
+    position: relative;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+section .conteneur {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    height: 90vh;
+    width: 100%;
+    margin: 0;
+    background-image: url(../images/pakatac.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+section .conteneur .title {
+    position: relative;
+    margin-top: 20vh;
+    background-color: rgba(155, 153, 153, 0.541);
+}
+
+section .conteneur .title h1 {
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+}
+
+section .conteneur p {
+    position: relative;
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+}
+
+section .conteneur .button {
+    position: absolute;
+    display: flex;
+    bottom: 7.5vh;
+    height: 7vh;
+    width:auto;
+    align-items: center;
+    justify-content: center;
+    padding: auto;
+    border: 2px solid rgb(90, 89, 89);
+    border-radius: 50px;
+    background-color: rgba(14, 146, 223, 0.658);
+}
+
+section .conteneur .button a {
+    position: relative;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    color: rgb(255, 255, 255);
+}
+@media screen and (min-width: 275px) and (max-width:580px) {
+    section .conteneur{
+        height:70vh;
+    }
+    section .conteneur .button {
+        right: 15vw;
+        bottom:5vh;
+    }
+
+    section .conteneur .title {
+        margin-left: 10vw;
+        margin-top: 10vh;
+    }
+}
+@media screen and (min-width: 580px) and (max-width:800px){
+    section .conteneur .button {
+        right: 15vw;
+    }
+    section .conteneur .title{
+        margin-left: 10vw;
+    }
+}
+@media screen and (min-width:800px){
+    section .conteneur .title{
+        margin-left: 15vw;
+    }
+    section .conteneur .button{
+        right: 15vw;
+    }
+}
+
+.desc {
+    position: relative;
+    margin-top: 5vh;
+    width: 100%;
+}
+
+.desc .epel {
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.desc .epel h2 {
+    font-family: 'Nunito', sans-serif;
+    color: rgb(14, 146, 223);
+}
+
+.desc .image,
+.desc .iption {
+    position: relative;
+    width: 95%;
+    align-items: center;
+    justify-content: center;
+}
+.desc .iption {
+    font-family: 'Nunito', sans-serif;
+    font-style: italic;
+}
+.desc .image{
+    margin-left:2.5%;
+}
+.desc .image img {
+    width: 100%;
+    border: 3px solid rgb(14, 146, 223);
+    border-radius:10px;
+}
+
+.desc .iption h4 {
+    position: relative;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.desc .iption p{
+    position: relative;
+    align-items: center;
+    text-align:justify;
+}

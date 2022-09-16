@@ -1,0 +1,33 @@
+.container{
+    font-family: 'Nunito', sans-serif;
+}
+.container .entete h2{
+    position: relative;
+    border-bottom: 2px solid rgb(14, 146, 223);
+}
+.papier {
+    border-radius: 10px;
+    box-shadow: 5px 15px 10px rgba(104, 103, 103, 0.5);
+}
+
+.common {
+    border-radius: 10px;
+    box-shadow: 5px 15px 10px rgba(104, 103, 103, 0.5);
+    height: auto;
+}
+.container ul li{
+    list-style-type: circle;
+}
+.container p{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align: justify;
+}
+.container p span{
+    color: rgb(14, 146, 223);
+    text-decoration: underline;
+}
+.container span{
+    color: rgb(14, 146, 223);
+}

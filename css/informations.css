@@ -1,0 +1,28 @@
+.image-info img{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-radius:10px;
+    border: 3px solid rgb(14, 146, 223);
+    box-shadow: 5px 10px 10px rgba(148, 145, 145, 0.5);
+}
+.descript{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Nunito',sans-serif;
+}
+.descript h2{
+    position: relative;
+    text-align: center;
+    border-bottom: 3px solid rgb(14, 146, 223);
+}
+.descript p{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    text-align:justify;
+}
+.descript ul li{
+    list-style-type: circle;
+}
