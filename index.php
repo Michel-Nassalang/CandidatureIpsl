@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/style_index.css">
     <link rel="stylesheet" href="assets/bootstrap-4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/parts/footer.css">
+    <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/themify-icons.css">
     <title>Depot de Candidature IPSL</title>
 </head>

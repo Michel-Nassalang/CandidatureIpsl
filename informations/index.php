@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../assets/bootstrap-4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/parts/footer.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/informations.css">
     <title>Informations</title>
 </head>

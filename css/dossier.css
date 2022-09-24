@@ -1,0 +1,59 @@
+*{
+    font-family: 'Nunito', sans-serif;
+}
+.tete {
+    position: relative;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    background: rgba(14, 146, 223, 0.363);
+    color: #fff;
+}
+
+.tete .tout {
+    position: relative;
+    display: block;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tete a {
+    text-decoration: none;
+}
+
+.tete .deconnex {
+    position: relative;
+    display: block;
+    align-items: center;
+    justify-content: center;
+}
+
+.tete .deconnex a {
+    position: relative;
+    margin-right: 2vw;
+}
+
+.tete a:hover {
+    color: rgb(109, 108, 108);
+}
+@media screen and (max-width: 775px) {
+    .tete .deconnex a span {
+        display: none;
+        visibility: hidden;
+    }
+
+    .teneur .contact {
+        margin-top: 2vh;
+    }
+}
+
+@media screen and (min-width:775px) {
+    .teneur {
+        margin-left: 3vw;
+    }
+
+    .teneur .profil img {
+        width: 200px;
+        height: 200px;
+    }
+}

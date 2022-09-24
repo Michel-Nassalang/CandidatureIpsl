@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/themify-icons.css">
     <link rel="stylesheet" href="../assets/bootstrap-4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/parts/footer.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/candidat.css">
     <title>Candidat</title>
 </head>
@@ -92,27 +92,48 @@
         <!-- ----------------------------- -->
         <?php if(isset($_GET["edition"]) && $_GET["edition"]==$compte['pseudo']){
         ?> 
-        <div class="row">
-            <div class="col-lg-8 col-md-7 col-sm-10">
-                <form action="../candidat/" method="post" enctype="multipart/form-data">
+        <form action="../candidat/" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-sm-10">
                     <div class="row profil">
-                        <div class="ml-3">
-                            <img src="../images/profils/<?= $compte['pseudo'] ?>.png" alt="" class="img-thumbnail">
-                            <div class="form-group">
+                        <div class="ml-3 col-lg-8 col-md-10 col-sm-10">
+                            <?php 
+                                $path1 = "../images/profils/user". $compte['id_candidat'] . ".png";
+                                $path2 = "../images/profils/user". $compte['id_candidat'] . ".jpg";
+                                $path3 = "../images/profils/user". $compte['id_candidat'] . ".jpeg";
+                                if (file_exists($path1)) {
+                                    ?>
+                                    <img src="<?= $path1 ?>" alt="" class="img-thumbnail">
+                                    <?php 
+                                }elseif (file_exists($path2)) {
+                                    ?>
+                                    <img src="../images/profils/<?= $path2 ?>" alt="" class="img-thumbnail">
+                                    <?php 
+                                }elseif (file_exists($path3)) {
+                                    ?>
+                                    <img src="../images/profils/<?= $path3 ?>" alt="" class="img-thumbnail">
+                                    <?php 
+                                }else{
+                                    ?>
+                                    <img src="../images/profils/profil.png" alt="" class="img-thumbnail">
+                                    <?php 
+                                }
+                            ?>
+                            <div class="form-group mt-3">
                                 <label for="image"><input type="file" name="image" class="upload_box form-control" class="form-control">
                             </div>
                         </div>
-                        <div class="ml-3">
+                        <div class="ml-3 col-lg-4 col-sm-10">
                             <div class="form-group">
-                                <input type="text" name="prenom" placeholder="Prénom" class="form-control" value="<?= $compte['prenom'] ?>">
+                                <input type="text" name="prenom" class="form-control" placeholder="<?= $compte['prenom'] ?>">
                             </div>
                             <div class="form-group">
-                                <input type="text" name="nom" placeholder="Nom" class="form-control" value="<?= $compte['nom'] ?>">
+                                <input type="text" name="nom" class="form-control" placeholder="<?= $compte['nom'] ?>">
                             </div>
                         </div>
                     </div>
                     <div class="column mt-4">
-                        <div class="form-group col-6">
+                        <div class="form-group col-lg-6">
                             <select name="statut" id="statut" class="form-control">
                                 <option value="" selected><?= $compte['statut'] ?></option>
                                 <option value="Etudiant">Etudiant</option>
@@ -120,38 +141,73 @@
                                 <option value="Professionnel">Professionnel</option>
                             </select>
                         </div>
-                        <div class="form-group col-6">
-                            <input type="text" name="age" placeholder="Age" class="form-control" value="<?= $compte['age'] ?>">
+                        <div class="form-group col-lg-6">
+                            <input type="text" name="age" class="form-control" placeholder="<?= ($compte['age']=="")? 'Indifini' : $compte['age'] ?>">
                         </div>
-                        <div class="form-group col-6">
-                            <input type="text" name="cni" placeholder="CNI" class="form-control" value="<?= $compte['cni'] ?>">
+                        <div class="form-group col-lg-6">
+                            <input type="text" name="cni" class="form-control" placeholder="<?= ($compte['cni']=="")? 'Indifini' : $compte['cni'] ?>">
                         </div>
                     </div>
-                    <div class="form-group mt-2">
-                        <input type="submit" name="save" class="btn btn-primary" value="mise à jour">
+                </div>
+                <?php
+                    $candidat = $db->prepare('SELECT * FROM dossier WHERE id_candidat = :id');
+                    $candidat->execute([
+                                'id' => $compte['id_candidat']
+                            ]);
+                    $dossier = $candidat->fetch();
+                    $ligne = $candidat->rowCount();
+                ?>
+                <div class="col-lg-4 col-md-5 col-sm-10">
+                    <div class="row contact ml-3">
+                        <div class="col-10"><h3>Mes contacts</h3></div>
+                        <div class="col-10">
+                            <div class="form-group mt-2">
+                                <input type="text" name="email" class="form-control" placeholder="<?= $compte['email'] ?>">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-group mt-2">
+                                <input type="text" name="Telephone" class="form-control" placeholder="<?= ($ligne !== 0)? $dossier['telephone'] : 'Télephone' ?>">
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-group mt-2">
+                                <input type="text" name="Adresse" class="form-control" placeholder="<?= ($ligne !== 0)? $dossier['adresse']: 'Adresse' ?>">
+                            </div>
+                        </div>
+                        <?php
+                            $inscription = $db->prepare('SELECT * FROM inscription WHERE id_candidat = :id');
+                            $inscription->execute([
+                                        'id' => $compte['id_candidat']
+                                    ]);
+                            $inscris = $inscription->fetch();
+                        ?>
+                        <div class="col-10">
+                            <div class="form-group mt-2">
+                                <input type="text" name="region" class="form-control" placeholder="<?= $inscris['lieu'] ?>">
+                            </div>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="col-lg-4 col-md-5 col-sm-10">
-                <div class="row contact ml-3">
-                    <h3>Mes contacts</h3>
-
                 </div>
             </div>
-        </div>
+            
+            <div class="form-group align-items-center justify-content-center ">
+                <input type="submit" name="save" class="btn btn-primary" value="mise à jour">
+            </div>
+        </form>
         <?php
-        if (isset($_FILES['img']) && $_FILES['img']['error'] == 0) {
-            if ($_FILES['img']['size'] <= 5000000) {
-                $info_fichier = pathinfo($_FILES['img']['name']);
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            if ($_FILES['image']['size'] <= 5000000) {
+                $info_fichier = pathinfo($_FILES['image']['name']);
                 $extension_fichier = $info_fichier['extension'];
                 $auto_extension = array('jpg', 'png', 'jpeg');
                 if (in_array($extension_fichier, $auto_extension)) {
-                    $img = $_FILES['img']['name'];
+                    $img = $_FILES['image']['name'];
                     if ($extension_fichier === 'png') {
-                        move_uploaded_file($_FILES['img']['tmp_name'], 'profils/'.basename("user" . $_SESSION['id'] . ".png"));
+                        move_uploaded_file($img, '../images/profils/'.basename("user" . $_SESSION['id'] . ".png"));
                         echo '<p>Merci d\'avoir ajouter votre photo de profil.</p>';
-                    }else {
-                        move_uploaded_file($_FILES['img']['tmp_name'], 'profils/'.basename("user" . $_SESSION['id'] . ".jpg"));
+                    } else {
+                        move_uploaded_file($img, '../images/profils/'.basename("user" . $_SESSION['id'] . ".jpg"));
                         echo '<p>Merci d\'avoir ajouter votre photo de profil.</p>';
                     }
                 }
@@ -163,6 +219,50 @@
                 echo '<p>Veuillez insérer une image de plus petite taille.</p>';
             }
         }
+        if(isset($_POST['nom'])){
+            $nom = htmlspecialchars($_POST['nom']);
+            $updateNom = $db->prepare('UPDATE candidat SET nom = :nom WHERE id_candidat = :id');
+            $updateNom->execute([
+                "id" => $_SESSION['id'],
+                "nom" => $nom
+            ]);
+        }
+        if(isset($_POST['prenom'])){
+            $prenom = htmlspecialchars($_POST['prenom']);
+            $updatePrenom = $db->prepare('UPDATE candidat SET prenom = :prenom WHERE id_candidat = :id');
+            $updatePrenom->execute([
+                "id" => $_SESSION['id'],
+                "prenom" => $prenom
+            ]);
+            $updatePrenom->closeCursor();
+        }
+        if(isset($_POST['statut'])){
+            $statut = htmlspecialchars($_POST['statut']);
+            $updateStatut = $db->prepare('UPDATE candidat SET statut = :statut WHERE id_candidat = :id');
+            $updateStatut->execute([
+                "id" => $_SESSION['id'],
+                "statut" => $statut
+            ]);
+            $updateStatut->closeCursor();
+        }
+        if(isset($_POST['age'])){
+            $age = htmlspecialchars($_POST['age']);
+            $updateAge = $db->prepare('UPDATE candidat SET age = :age WHERE id_candidat = :id');
+            $updateAge->execute([
+                "id" => $_SESSION['id'],
+                "age" => $age
+            ]);
+            $updateAge->closeCursor();
+        }
+        if(isset($_POST['cni'])){
+            $cni = htmlspecialchars($_POST['cni']);
+            $updateCni = $db->prepare('UPDATE candidat SET cni = :cni WHERE id_candidat = :id');
+            $updateCni->execute([
+                "id" => $_SESSION['id'],
+                "cni" => $cni
+            ]);
+            $updateCni->closeCursor();
+        }
         ?>
         <?php 
         }else{
@@ -171,7 +271,28 @@
             <div class="col-lg-8 col-md-7 col-sm-10">
                 <div class="row profil">
                     <div class="ml-3">
-                        <img src="../images/profils/<?= $compte['pseudo'] ?>.png" alt="" class="img-thumbnail">
+                        <?php 
+                                $path1 = "../images/profils/user". $compte['id_candidat'] . ".png";
+                                $path2 = "../images/profils/user". $compte['id_candidat'] . ".jpg";
+                                $path3 = "../images/profils/user". $compte['id_candidat'] . ".jpeg";
+                                if (file_exists($path1)) {
+                                    ?>
+                                    <img src="<?= $path1 ?>" alt="" class="img-thumbnail">
+                                    <?php 
+                                }elseif (file_exists($path2)) {
+                                    ?>
+                                    <img src="../images/profils/<?= $path2 ?>" alt="" class="img-thumbnail">
+                                    <?php 
+                                }elseif (file_exists($path3)) {
+                                    ?>
+                                    <img src="../images/profils/<?= $path3 ?>" alt="" class="img-thumbnail">
+                                    <?php 
+                                }else{
+                                    ?>
+                                    <img src="../images/profils/profil.png" alt="" class="img-thumbnail">
+                                    <?php 
+                                }
+                        ?>
                     </div>
                     <div class="ml-3">
                         <h4><?= $compte['prenom'] ?>  <?= $compte['nom'] ?></h4>
@@ -182,13 +303,7 @@
                 <div class="column mt-4">
                     <h6><span>Statut: </span><?= $compte['statut'] ?></h6>
                     <h6><span>Age: </span> <?= $compte['age'] ?> ans</h6>
-                    <h6><span>CNI: </span> 
-                    <?php 
-                    if ($compte['cni']==""){ 
-                        echo "Indéfini";
-                     }else{
-                        echo $compte['cni'];
-                    } ?></h6>
+                    <h6><span>CNI: </span> <?=($compte['cni']=="") ? "Indéfini" : $compte['cni']; ?></h6>
                 </div>
             </div>
             <?php
@@ -205,23 +320,11 @@
                     <div class="col-8"><h6><span>Email: </span> <?= $compte['email'] ?></h6></div>
                     <div class="col-8">
                         <h6><span>Telephone: </span>
-                        <?php 
-                        if ($ligne!=1){ 
-                            echo "Indéfini";
-                        }else{
-                            echo $dossier['telephone'];
-                        } ?>
+                        <?= ($ligne!=1) ? "Indéfini" : $dossier['telephone'] ?>
                         </h6>
                     </div>
                     <div class="col-8">
-                        <h6><span>Adresse: </span>
-                        <?php 
-                        if ($ligne!=1){ 
-                            echo "Indéfini";
-                        }else{
-                            echo $dossier['adresse'];
-                        } ?>
-                        </h6>
+                        <h6><span>Adresse: </span><?= ($ligne!=1) ? "Indéfini" : $dossier['adresse'] ?></h6>
                     </div>
                     <?php
                         $inscription = $db->prepare('SELECT * FROM inscription WHERE id_candidat = :id');

@@ -40,10 +40,10 @@
 }
 .teneur .profil img{
     position: relative;
-    align-items:flex-start;
-    justify-content: start;
-    width:100px;
-    height:100px;
+    /* align-items:flex-start; */
+    /* justify-content: start; */
+    /* width:100px;
+    height:100px; */
 }
 .teneur .contact h3{
     border-bottom: 3px solid rgb(14, 146, 223);

@@ -7,20 +7,22 @@
     session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="dossier.css">
+    <link rel="stylesheet" href="../../css/dossier.css">
+    <link rel="stylesheet" href="../../css/footer.css">
+    <link rel="stylesheet" href="../../css/themify-icons.css">
     <link rel="stylesheet" href="../../assets/bootstrap-4.0.0/css/bootstrap.min.css">
     <title>Mon dossier</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="../../ ">
+            <a class="navbar-brand" href="../../">
                     <img src="../../images/ipsl.png" alt="" width="200" height="40" class="d-inline-block align-top"/>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,42 +63,85 @@
             </div>
         </nav>
     </header>
-    <div class="row align-items-center justify-content-center">
-        <div class="col-lg-4 col-md-6 col-sm-8">
-            <form action="" class="form align-items-center justify-content-center" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input type="text" name="prenom" placeholder="Prénom" class="form-control" required="required">
+    <?php
+        $connexion = $db->prepare('SELECT * FROM candidat WHERE pseudo = :pseudo');
+        $connexion->execute([
+                    'pseudo' => $_SESSION['pseudo']
+                ]);
+        $compte = $connexion->fetch();
+    ?>
+    <div class="container-fluid pl-5 tete">    
+        <div class="row align-items-center justify-content-center">
+            <div class="col-lg-8 col-md-8 col-sm-6 tout">
+                <div class="intro">
+                    <a href="../">Acceuil</a>
+                    <span>→</span>
+                    <a href="">Dossiers de <?= $compte['prenom'] ?> <?=$compte['nom'] ?></a>
                 </div>
-                <div class="form-group">
-                    <input type="text" name="nom" placeholder="Nom" class="form-control" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="ide" placeholder="Id Etudiant" class="form-control" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="text" name ="pseudo" placeholder="Pseudo" class="form-control" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="email" name="email" placeholder="Email" class="form-control" required="required">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="ufr" placeholder="Ufr" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="image"><input type="file" name="image" class="upload_box form-control" class="form-control" required="required">
-                </div>
-                <div class="form-group">
-                    <select name="genre" id="genre" class="form-control">
-                        <option value="Homme" selected>Homme</option>
-                        <option value="Femme">Femme</option>
-                    </select>
-                </div>
-                <div class="box">
-                    <input type="submit" class="submit" value="Soumettre">
-                </div>
-            </form>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-2 deconnex">
+                <a href=""><i class="ti-user"></i> <span>Compte</span></a>
+                <a href="connexion/deconnexion.php"><i class="ti-power-off"></i> <span>Deconnexion</span></a>
+            </div>
         </div>
     </div>
+    <div class="container">
+        <h1 class="title mt-3">Mes dossiers</h1>
+        <div class="row">
+            <div class="col-lg-4 col-md-8">
+                <h3 class="ml-5">Mes coordonnées</h3>
+            </div>
+            <div class="col-lg-8 col-md-8">
+                <h3 class="ml-5">Identification</h3>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="row congrid align-items-center justify-content-center">
+            <div class="col-lg-4 col-md-8 col-sm-10">
+                <div class="presta ml-2">
+                    <img src="../../images/ipsl.png" alt="" width="200" height="40" class="d-inline-block align-top"/>
+                    <p>L’institut Polytechnique de Saint-Louis (IPSL), une école d’ingénieurs de l’Université Gaston Berger créée en 2012, a pour ambition de faire émerger dans la région nord un pôle d’ingénierie d’excellence de classe internationale.</p>
+                    <div>
+                        <i class="fab fa-phone" href=''>Telephone:+221 778261896 / +221 781252827</i></br>
+                        <i class="fab fa-mail-bulk" href=''>Email: ipsl@ugb.edu.sn</i>
+                    </div>
+                    <div class="liant">
+                        <i class="fab fa-github-square" href='#'></i>
+                        <i class="fab fa-instagram" href='#'></i>
+                        <i class="fab fa-linkedin" href='#'></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-8 col-sm-10 vision">
+                <h2>Institut</h2>
+                <ul>
+                    <li><a href="">Acceuil</a></li>
+                    <li><a href="">Mentions légales</a></li>
+                    <li><a href="">Services numériques</a></li>
+                    <li><a href=""># Soutenez nous</a></li>
+                    <li><a href="">Le guide du Candidat</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-8 col-sm-10 contact">
+                <h2>Contactez nous</h2>
+                <form action="">
+                    <div class="form-group">
+                        <input type="email" placeholder="Adresse mail" class="form-control" class="mail">
+                    </div>
+                    <div class="form-group">
+                        <textarea cols="30" rows="5" class="form-control" placeholder="Votre message"></textarea>
+                    </div>
+                    <input type="submit" value="Envoyez" class="btn btn-primary"class="submit_footer">
+                </form>
+            </div>
+        </div>
+        <div class="bottomfooter">
+            <a href=""> Copyright 2020</a>  
+            <a href=""> Tous droits reservés</a> 
+            <a href="">IPSL</a>
+        </div>
+    </footer>
     <script src="../../assets/jquery.js"></script>
     <script src="../../assets/bootstrap-4.0.0/js/bootstrap.min.js"></script>
 </body>

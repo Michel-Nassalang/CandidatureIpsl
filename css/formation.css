@@ -1,3 +1,6 @@
+*{
+    font-family: 'Nunito', sans-serif;
+}
 .container .entete h2{
     position: relative;
     align-items: center;
