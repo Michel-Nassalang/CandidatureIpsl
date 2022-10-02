@@ -88,7 +88,7 @@
         $selection_pseudo = $db->prepare('SELECT * FROM candidat WHERE pseudo = :pseudo');
         $selection_pseudo->execute([
                     'pseudo' => $pseudo
-                ]);
+        ]);
     ?>
         <div class="row align-items-center justify-content-center">
     <?php

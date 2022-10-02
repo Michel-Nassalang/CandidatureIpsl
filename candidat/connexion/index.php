@@ -118,7 +118,8 @@
                 if(password_verify($pass, $hash))
                 {
                     $_SESSION['pseudo'] = $pseudo;
-                    $_SESSION['id'] = $compte['id'];
+                    $_SESSION['id'] = $compte['id_candidat'];
+                    setcookie('Compte candidature',"Candidature", time() + 60 * 60 * 24);
                     header('Location: ../compte/');
                     $connexion->closeCursor();
                 }else{

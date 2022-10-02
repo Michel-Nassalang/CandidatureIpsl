@@ -28,7 +28,7 @@ li a{
     overflow: hidden;
     color: rgb(14, 146, 223);
 }
-li a::before {
+ header li a::before {
     position: absolute;
     content: '';
     bottom: 0;
@@ -37,7 +37,7 @@ li a::before {
     transition: 0.5s ease-in-out;
 }
 
-li a:hover::before {
+header li a:hover::before {
     width: 100%;
     transition: 1s ease-in-out;
 }

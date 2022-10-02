@@ -3,12 +3,16 @@
 }
 .tete {
     position: relative;
-    padding-top: 2vh;
-    padding-bottom: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
     background: rgba(14, 146, 223, 0.363);
     color: #fff;
 }
-
+.tete .fact{
+    position: relative;
+    padding-top: 1vh;
+    padding-bottom: 2vh;
+}
 .tete .tout {
     position: relative;
     display: block;
@@ -35,6 +39,54 @@
 
 .tete a:hover {
     color: rgb(109, 108, 108);
+}
+.papiers{
+    position: relative;
+    /* height: 80vh; */
+}
+.papiers span,
+.cursus span{
+    color: rgb(14, 146, 223);
+}
+.papiers .coordon,
+.papiers .iden,
+.cursus{
+    margin-top: 2vh;
+    border-radius: 10px;
+    box-shadow: 5px 15px 10px rgba(104, 103, 103, 0.5);
+}
+.cursus{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+.iden .extrait{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.iden .extrait .image{
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+.cursus .trait{
+    border: 2px solid rgb(14, 146, 223);
+}
+.renseign{
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}
+.cursus .classe{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
 }
 @media screen and (max-width: 775px) {
     .tete .deconnex a span {

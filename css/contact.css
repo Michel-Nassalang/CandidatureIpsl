@@ -27,3 +27,12 @@
     box-shadow: 5px 15px 10px rgba(104, 103, 103, 0.5);
     height: auto;
 }
+.map{
+    position: relative;
+    margin-top: 7.5vh;
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    border: 2px solid rgb(14,146,223);
+    border-radius: 10px;
+}
