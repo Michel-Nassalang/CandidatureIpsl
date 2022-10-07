@@ -72,6 +72,7 @@
                     'pseudo' => $_SESSION['pseudo']
                 ]);
         $compte = $connexion->fetch();
+        $connexion->closeCursor();
     ?>
     <div class="container-fluid pl-5 tete">    
         <div class="row align-items-center justify-content-center">
@@ -92,15 +93,15 @@
         <!-- ----------------------------- -->
         <?php if(isset($_GET["edition"]) && $_GET["edition"]==$compte['pseudo']){
         ?> 
-        <form action="../candidat/" method="POST" enctype="multipart/form-data">
+        <form action="" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-10">
                     <div class="row profil">
                         <div class="ml-3 col-lg-8 col-md-10 col-sm-10">
                             <?php 
-                                $path1 = "../images/profils/user". $compte['id_candidat'] . ".png";
-                                $path2 = "../images/profils/user". $compte['id_candidat'] . ".jpg";
-                                $path3 = "../images/profils/user". $compte['id_candidat'] . ".jpeg";
+                                $path1 = "../images/profils/user_". $compte['pseudo'] . ".png";
+                                $path2 = "../images/profils/user_". $compte['pseudo'] . ".jpg";
+                                $path3 = "../images/profils/user_". $compte['pseudo'] . ".jpeg";
                                 if (file_exists($path1)) {
                                     ?>
                                     <img src="<?= $path1 ?>" alt="" class="img-thumbnail">
@@ -156,6 +157,7 @@
                             ]);
                     $dossier = $candidat->fetch();
                     $ligne = $candidat->rowCount();
+                    $candidat->closeCursor();
                 ?>
                 <div class="col-lg-4 col-md-5 col-sm-10">
                     <div class="row contact ml-3">
@@ -167,24 +169,12 @@
                         </div>
                         <div class="col-10">
                             <div class="form-group mt-2">
-                                <input type="text" name="Telephone" class="form-control" placeholder="<?= ($ligne !== 0)? $dossier['telephone'] : 'Télephone' ?>">
+                                <input type="text" name="telephone" class="form-control" placeholder="<?= ($ligne !== 0)? $dossier['telephone'] : 'Télephone' ?>">
                             </div>
                         </div>
                         <div class="col-10">
                             <div class="form-group mt-2">
-                                <input type="text" name="Adresse" class="form-control" placeholder="<?= ($ligne !== 0)? $dossier['adresse']: 'Adresse' ?>">
-                            </div>
-                        </div>
-                        <?php
-                            $inscription = $db->prepare('SELECT * FROM inscription WHERE id_candidat = :id');
-                            $inscription->execute([
-                                        'id' => $compte['id_candidat']
-                                    ]);
-                            $inscris = $inscription->fetch();
-                        ?>
-                        <div class="col-10">
-                            <div class="form-group mt-2">
-                                <input type="text" name="region" class="form-control" placeholder="<?= $inscris['lieu'] ?>">
+                                <input type="text" name="adresse" class="form-control" placeholder="<?= ($ligne !== 0)? $dossier['adresse']: 'Adresse' ?>">
                             </div>
                         </div>
                     </div>
@@ -202,12 +192,12 @@
                 $extension_fichier = $info_fichier['extension'];
                 $auto_extension = array('jpg', 'png', 'jpeg');
                 if (in_array($extension_fichier, $auto_extension)) {
-                    $img = $_FILES['image']['name'];
+                    $img = $_FILES['image']['tmp_name'];
                     if ($extension_fichier === 'png') {
-                        move_uploaded_file($img, '../images/profils/'.basename("user" . $_SESSION['id'] . ".png"));
+                        move_uploaded_file($img, '../images/profils/'.basename("user_" . $_SESSION['pseudo'] . ".png"));
                         echo '<p>Merci d\'avoir ajouter votre photo de profil.</p>';
                     } else {
-                        move_uploaded_file($img, '../images/profils/'.basename("user" . $_SESSION['id'] . ".jpg"));
+                        move_uploaded_file($img, '../images/profils/'.basename("user_" . $_SESSION['pseudo'] . ".jpg"));
                         echo '<p>Merci d\'avoir ajouter votre photo de profil.</p>';
                     }
                 }
@@ -219,15 +209,16 @@
                 echo '<p>Veuillez insérer une image de plus petite taille.</p>';
             }
         }
-        if(isset($_POST['nom'])){
+        if(isset($_POST['nom']) && !empty($_POST['nom'])){
             $nom = htmlspecialchars($_POST['nom']);
             $updateNom = $db->prepare('UPDATE candidat SET nom = :nom WHERE id_candidat = :id');
             $updateNom->execute([
                 "id" => $_SESSION['id'],
                 "nom" => $nom
             ]);
+            $updateNom->closeCursor();
         }
-        if(isset($_POST['prenom'])){
+        if(isset($_POST['prenom']) && !empty($_POST['prenom'])){
             $prenom = htmlspecialchars($_POST['prenom']);
             $updatePrenom = $db->prepare('UPDATE candidat SET prenom = :prenom WHERE id_candidat = :id');
             $updatePrenom->execute([
@@ -236,7 +227,7 @@
             ]);
             $updatePrenom->closeCursor();
         }
-        if(isset($_POST['statut'])){
+        if(isset($_POST['statut']) && !empty($_POST['statut'])){
             $statut = htmlspecialchars($_POST['statut']);
             $updateStatut = $db->prepare('UPDATE candidat SET statut = :statut WHERE id_candidat = :id');
             $updateStatut->execute([
@@ -245,7 +236,7 @@
             ]);
             $updateStatut->closeCursor();
         }
-        if(isset($_POST['age'])){
+        if(isset($_POST['age']) && !empty($_POST['age'])){
             $age = htmlspecialchars($_POST['age']);
             $updateAge = $db->prepare('UPDATE candidat SET age = :age WHERE id_candidat = :id');
             $updateAge->execute([
@@ -254,7 +245,7 @@
             ]);
             $updateAge->closeCursor();
         }
-        if(isset($_POST['cni'])){
+        if(isset($_POST['cni']) && !empty($_POST['cni'])){
             $cni = htmlspecialchars($_POST['cni']);
             $updateCni = $db->prepare('UPDATE candidat SET cni = :cni WHERE id_candidat = :id');
             $updateCni->execute([
@@ -263,8 +254,91 @@
             ]);
             $updateCni->closeCursor();
         }
-        ?>
-        <?php 
+        if(isset($_POST['email']) && !empty($_POST['email'])){
+            $email = htmlspecialchars($_POST['email']);
+            $updateEmail = $db->prepare('UPDATE candidat SET email = :email WHERE id_candidat = :id');
+            $updateEmail->execute([
+                "id" => $_SESSION['id'],
+                "email" => $email
+            ]);
+            $updateEmail->closeCursor();
+        }
+        if(isset($_POST['telephone']) && !empty($_POST['telephone'])){
+            $telephone = htmlspecialchars($_POST['telephone']);
+            $select_dossier = $db->prepare('SELECT * FROM dossier WHERE id_candidat = :id');
+            $select_dossier->execute([
+                        'id' => $_SESSION['id']
+                    ]);
+            $dossier = $select_dossier->fetch();
+            $ligne_dossier = $select_dossier->rowCount();
+            $select_dossier->closeCursor();
+            if($ligne_dossier > 0){
+                $updateTelephone = $db->prepare('UPDATE dossier SET telephone = :telephone WHERE id_candidat = :id');
+                $updateTelephone->execute([
+                    "id" => $_SESSION['id'],
+                    "telephone" => $telephone
+                ]);
+                $updateTelephone->closeCursor();
+            }else{
+                $insertTelephone = $db->prepare('INSERT INTO dossier(telephone, id_candidat) VALUES (:telephone, :id)');
+                $insertTelephone->execute([
+                    "telephone" => $telephone,
+                    "id" => $_SESSION['id']
+                ]);
+                $insertTelephone->closeCursor();
+            }
+        }
+        if(isset($_POST['adresse']) && !empty($_POST['adresse'])){
+            $adresse = htmlspecialchars($_POST['adresse']);
+            $select_dossier = $db->prepare('SELECT * FROM dossier WHERE id_candidat = :id');
+            $select_dossier->execute([
+                        'id' => $_SESSION['id']
+                    ]);
+            $dossier = $select_dossier->fetch();
+            $ligne_dossier = $select_dossier->rowCount();
+            $select_dossier->closeCursor();
+            if($ligne_dossier > 0){
+                $updateAdresse = $db->prepare('UPDATE dossier SET adresse = :adresse WHERE id_candidat = :id');
+                $updateAdresse->execute([
+                    "id" => $_SESSION['id'],
+                    "adresse" => $adresse
+                ]);
+                $updateAdresse->closeCursor();
+            }else{
+                $insertAdresse = $db->prepare('INSERT INTO dossier(adresse, id_candidat) VALUES (:adresse, :id)');
+                $insertAdresse->execute([
+                    "adresse" => $adresse,
+                    "id" => $_SESSION['id']
+                ]);
+                $insertAdresse->closeCursor();
+            }
+        }
+        if(isset($_POST['email']) && !empty($_POST['email'])){
+            $email = htmlspecialchars($_POST['email']);
+            $select_dossier = $db->prepare('SELECT * FROM dossier WHERE id_candidat = :id');
+            $select_dossier->execute([
+                        'id' => $_SESSION['id']
+                    ]);
+            $dossier = $select_dossier->fetch();
+            $ligne_dossier = $select_dossier->rowCount();
+            $select_dossier->closeCursor();
+            if($ligne_dossier > 0){
+                $updateEmail = $db->prepare('UPDATE dossier SET email = :email WHERE id_candidat = :id');
+                $updateEmail->execute([
+                    "id" => $_SESSION['id'],
+                    "email" => $email
+                ]);
+                $updateEmail->closeCursor();
+            }else{
+                $insertEmail = $db->prepare('INSERT INTO dossier(email, id_candidat) VALUES (:email, :id)');
+                $insertEmail->execute([
+                    "email" => $email,
+                    "id" => $_SESSION['id']
+                ]);
+                $insertEmail->closeCursor();
+            }
+        }
+        header('Location: ../candidat/');
         }else{
         ?> 
         <div class="row">
@@ -272,9 +346,9 @@
                 <div class="row profil">
                     <div class="ml-3">
                         <?php 
-                                $path1 = "../images/profils/user". $compte['id_candidat'] . ".png";
-                                $path2 = "../images/profils/user". $compte['id_candidat'] . ".jpg";
-                                $path3 = "../images/profils/user". $compte['id_candidat'] . ".jpeg";
+                                $path1 = "../images/profils/user_". $compte['pseudo'] . ".png";
+                                $path2 = "../images/profils/user_". $compte['pseudo'] . ".jpg";
+                                $path3 = "../images/profils/user_". $compte['pseudo'] . ".jpeg";
                                 if (file_exists($path1)) {
                                     ?>
                                     <img src="<?= $path1 ?>" alt="" class="img-thumbnail">
@@ -295,7 +369,7 @@
                         ?>
                     </div>
                     <div class="ml-3">
-                        <h4><?= $compte['prenom'] ?>  <?= $compte['nom'] ?></h4>
+                        <h4><?= $compte['prenom'] ?> <?= $compte['nom'] ?></h4>
                         <h5><?= $compte['pseudo'] ?></h5>
                         <a href="?edition=<?= $compte['pseudo'] ?>"><h5><i class="ti-pencil-alt"></i></h5></a>
                     </div>
@@ -313,6 +387,7 @@
                         ]);
                 $dossier = $candidat->fetch();
                 $ligne = $candidat->rowCount();
+                $candidat->closeCursor();
             ?>
             <div class="col-lg-4 col-md-5 col-sm-10">
                 <div class="row contact ml-3">
@@ -332,6 +407,7 @@
                                     'id' => $compte['id_candidat']
                                 ]);
                         $inscris = $inscription->fetch();
+                        $inscription->closeCursor();
                     ?>
                     <div class="col-8"><h6><span>Région: </span><?= $inscris['lieu'] ?></h6></div>
                 </div>

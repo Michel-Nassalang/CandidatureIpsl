@@ -85,7 +85,7 @@
                 if(password_verify($pass, $hash))
                 {
                     $_SESSION['pseudo'] = $pseudo;
-                    $_SESSION['id'] = $compte['id'];
+                    $_SESSION['id'] = $compte['id_candidat'];
                     header('Location: ../');
                     $connexion->closeCursor();
                 }else{

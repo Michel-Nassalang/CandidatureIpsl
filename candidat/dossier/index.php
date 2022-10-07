@@ -67,9 +67,9 @@
         </nav>
     </header>
     <?php
-        $connexion = $db->prepare('SELECT * FROM candidat WHERE pseudo = :pseudo');
+        $connexion = $db->prepare('SELECT * FROM candidat WHERE id_candidat = :id');
         $connexion->execute([
-                    'pseudo' => $_SESSION['pseudo']
+                    'id' => $_SESSION['id']
                 ]);
         $compte = $connexion->fetch();
         $connexion->closeCursor();
@@ -92,7 +92,7 @@
     <?php
         $candidat = $db->prepare('SELECT * FROM dossier WHERE id_candidat = :id');
         $candidat->execute([
-            'id' => $compte['id_candidat']
+            'id' => $_SESSION['id']
         ]);
         $dossier = $candidat->fetch();
         $ligne_dossier = $candidat->rowCount();
@@ -106,7 +106,7 @@
                 <?php if(isset($_GET["coordonnees"]) && $_GET["coordonnees"]==$_SESSION['pseudo'])
                 {
                 ?> 
-                    <form action="../dossier/" method="post">
+                    <form action="" method="post">
                         <div class="col-10 ml-5 form-group">
                             <input type="text" name="email" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Email" : $dossier['email'] ?>" required>
                         </div>
@@ -125,7 +125,8 @@
                     </form>
                 <?php
                 if($ligne_dossier < 1){
-                    if(isset($_POST['email']) && isset($_POST['telephone']) && isset($_POST['adresse']) && isset($_POST['centre'])){
+                    if(isset($_POST['email']) && isset($_POST['telephone']) && isset($_POST['adresse']) && isset($_POST['centre']) &&
+                        !empty($_POST['email']) && !empty($_POST['telephone']) && !empty($_POST['adresse']) && !empty($_POST['centre'])){
                         $email = htmlspecialchars($_POST['email']);
                         $telephone = htmlspecialchars($_POST['telephone']);
                         $adresse = htmlspecialchars($_POST['adresse']);
@@ -137,12 +138,13 @@
                             "telephone" => $telephone,
                             "adresse" => $adresse,
                             "centre" => $centre,
-                            "id" => $compte['id_candidat']
+                            "id" => $_SESSION['id']
                         ]);
                         $insertion_c->closeCursor();
                     }
                 }else{
-                    if(isset($_POST['email']) && isset($_POST['telephone']) && isset($_POST['adresse']) && isset($_POST['centre'])){
+                    if(isset($_POST['email']) && isset($_POST['telephone']) && isset($_POST['adresse']) && isset($_POST['centre']) &&
+                        !empty($_POST['email']) && !empty($_POST['telephone']) && !empty($_POST['adresse']) && !empty($_POST['centre'])){
                         $email = htmlspecialchars($_POST['email']);
                         $telephone = htmlspecialchars($_POST['telephone']);
                         $adresse = htmlspecialchars($_POST['adresse']);
@@ -154,7 +156,7 @@
                             "telephone" => $telephone,
                             "adresse" => $adresse,
                             "centre" => $centre,
-                            "id" => $compte['id_candidat']
+                            "id" => $_SESSION['id']
                         ]);
                         $insertion_c->closeCursor();
                     }
@@ -191,7 +193,7 @@
                 <?php if(isset($_GET["extrait"]) && $_GET["extrait"]==$_SESSION['pseudo'])
                     {
                     ?>
-                        <form action="../dossier/" method="post" class="mt-2 mb-2 mx-5">
+                        <form action="" method="post" class="mt-2 mb-2 mx-5">
                             <div class="form-group">
                                 <label for="image"><input type="file" name="extrait" class="upload_box form-control" class="form-control">
                             </div>
@@ -205,21 +207,21 @@
                                         $extension_fichier = $info_fichier['extension'];
                                         $auto_extension = array('jpg', 'png', 'jpeg');
                                         if (in_array($extension_fichier, $auto_extension)) {
-                                            $img = $_FILES['extrait']['name'];
+                                            $img = $_FILES['extrait']['tmp_name'];
                                             if ($extension_fichier === 'png') {
-                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait'. $_SESSION['pseudo'] . '.png'));
+                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait_'. $_SESSION['pseudo'] . '.png'));
                                                 $insertion_extrait = $db->prepare('INSERT INTO dossier(extrait_naissance, id_candidat) VALUES (:extrait, :id)');
                                                 $insertion_extrait->execute([
-                                                    'extrait' => 'extrait'. $_SESSION['pseudo'] . '.png',
-                                                    'id' => $compte['id_candidat']
+                                                    'extrait' => 'extrait_'. $_SESSION['pseudo'] . '.png',
+                                                    'id' => $_SESSION['id']
                                                 ]);
                                                 $insertion_extrait->closeCursor();
                                             } else {
-                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait'. $_SESSION['pseudo'] . '.jpg'));
+                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait_'. $_SESSION['pseudo'] . '.jpg'));
                                                 $insertion_extrait = $db->prepare('INSERT INTO dossier(extrait_naissance, id_candidat) VALUES (:extrait, :id)');
                                                 $insertion_extrait->execute([
-                                                    'extrait' => 'extrait'. $_SESSION['pseudo'] . '.jpg',
-                                                    'id' => $compte['id_candidat']
+                                                    'extrait' => 'extrait_'. $_SESSION['pseudo'] . '.jpg',
+                                                    'id' => $_SESSION['id']
                                                 ]);
                                                 $insertion_extrait->closeCursor();
                                             }
@@ -239,21 +241,21 @@
                                         $extension_fichier = $info_fichier['extension'];
                                         $auto_extension = array('jpg', 'png', 'jpeg');
                                         if (in_array($extension_fichier, $auto_extension)) {
-                                            $img = $_FILES['extrait']['name'];
+                                            $img = $_FILES['extrait']['tmp_name'];
                                             if ($extension_fichier === 'png') {
-                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait'. $_SESSION['pseudo'] . '.png'));
+                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait_'. $_SESSION['pseudo'] . '.png'));
                                                 $insertion_extrait = $db->prepare('UPDATE dossier SET extrait_naissance = :extrait WHERE id_candidat = :id');
                                                 $insertion_extrait->execute([
-                                                    'extrait' => 'extrait'.$_SESSION['pseudo'] . '.png',
-                                                    'id' => $compte['id_candidat']
+                                                    'extrait' => 'extrait_'.$_SESSION['pseudo'] . '.png',
+                                                    'id' => $_SESSION['id']
                                                 ]);
                                                 $insertion_extrait->closeCursor();
                                             } else {
-                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait'. $_SESSION['pseudo'] . '.jpg'));
+                                                move_uploaded_file($img, '../images/extraits/'.basename('extrait_'. $_SESSION['pseudo'] . '.jpg'));
                                                 $insertion_extrait = $db->prepare('UPDATE dossier SET extrait_naissance = :extrait WHERE id_candidat = :id');
                                                 $insertion_extrait->execute([
-                                                    'extrait' => 'extrait'.$_SESSION['pseudo'] . '.jpg',
-                                                    'id' => $compte['id_candidat']
+                                                    'extrait' => 'extrait_'.$_SESSION['pseudo'] . '.jpg',
+                                                    'id' => $_SESSION['id']
                                                 ]);
                                                 $insertion_extrait->closeCursor();
                                             }
@@ -301,7 +303,7 @@
                 <?php
                     $etude = $db->prepare('SELECT * FROM cursus WHERE id_candidat = :id');
                     $etude->execute([
-                        'id' => $compte['id_candidat']
+                        'id' => $_SESSION['id']
                     ]);
                     $cursus = $etude->fetchAll();
                     $ligne_cursus = $etude->rowCount();
@@ -314,7 +316,7 @@
                                 <?php
                                 if (isset($_GET["cursus"]) && $_GET["cursus"]==$_SESSION['pseudo']) {
                                     ?>
-                                    <form action="../dossier/" method="post">
+                                    <form action="" method="post">
                                         <div class="col-10 ml-5 form-group">
                                             <input type="text" name="classe" class="form-control" placeholder="<?= ($value['classe'] === NULL) ? "Classe" : $value['classe'] ?>">
                                         </div>
@@ -394,7 +396,7 @@
                                 <?php
                                     if (isset($_GET["bulletin"]) && $_GET["bulletin"]==$_SESSION['pseudo']) {
                                         ?>
-                                            <form action="../dossier/" method="post" class="mb-5 mx-5">
+                                            <form action="" method="post" class="mb-5 mx-5">
                                                 <div class="form-group">
                                                     <input type="text" name="semestre" class="form-control" placeholder="<?= ($bulletin['semestre'] === NULL) ? "Semestre" : $bulletin['semestre'] ?>">
                                                 </div>
@@ -410,7 +412,7 @@
                                                 $extension_fichier = $info_fichier['extension'];
                                                 $auto_extension = array('jpg', 'png', 'jpeg');
                                                 if (in_array($extension_fichier, $auto_extension)) {
-                                                    $img = $_FILES['bulletin']['name'];
+                                                    $img = $_FILES['bulletin']['tmp_name'];
                                                     if ($extension_fichier === 'png') {
                                                         move_uploaded_file($img, '../images/bulletins/'.basename('bulletin_'. $_SESSION['pseudo'] . '.png'));
                                                         $insertion_bulletin = $db->prepare('UPDATE dossier SET bulletin = :bulletin WHERE id_cursus = :id');
@@ -460,7 +462,7 @@
                                 }else{
                                     if(isset($_GET["bulletins"]) && $_GET["bulletins"]==$_SESSION['pseudo']){
                                     ?>
-                                        <form action="../dossier/" method="post" class="mb-5 mx-5">
+                                        <form action="" method="post" class="mb-5 mx-5">
                                                 <div class="form-group">
                                                     <input type="text" name="nsemestre" class="form-control" placeholder="Semestre">
                                                 </div>
@@ -487,7 +489,7 @@
                         <?php
                             if (isset($_GET["curajout"]) && $_GET["curajout"]==$_SESSION['pseudo']) {
                                 ?>
-                                <form action="../dossier/" method="post">
+                                <form action="" method="post">
                                     <div class="mx-5 mt-3 form-group">
                                         <input type="text" name="classe" class="form-control" placeholder="Classe">
                                     </div>
@@ -517,7 +519,7 @@
                         <?php
                             if (isset($_GET["curajout"]) && $_GET["curajout"]==$_SESSION['pseudo']) {
                                 ?>
-                                <form action="../dossier/" method="post">
+                                <form action="" method="post">
                                     <div class="mx-5 mt-3 form-group">
                                         <input type="text" name="classe" class="form-control" placeholder="Classe">
                                     </div>
