@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="../../css/footer.css">
     <link rel="stylesheet" href="../../css/admission.css">
     <title>Admissions</title>
+    <link rel="shortcut icon" href="../../images/ipsl.ico" type="image/x-icon">
 </head>
 <body>
     <header>

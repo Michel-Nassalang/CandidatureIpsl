@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="connexion.css">
     <link rel="stylesheet" href="../../assets/bootstrap-4.0.0/css/bootstrap.min.css">
     <title>Connexion Etudiant</title>
+    <link rel="shortcut icon" href="../../images/ipsl.ico" type="image/x-icon">
 </head>
 <body>
     <header>

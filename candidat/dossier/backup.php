@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="dossier.css">
     <link rel="stylesheet" href="../../assets/bootstrap-4.0.0/css/bootstrap.min.css">
     <title>Mon dossier</title>
+    <link rel="shortcut icon" href="../../images/ipsl.ico" type="image/x-icon">
 </head>
 <body>
     <header>

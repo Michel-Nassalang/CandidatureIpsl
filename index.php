@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/themify-icons.css">
     <title>Depot de Candidature IPSL</title>
+    <link rel="shortcut icon" href="images/ipsl.ico" type="image/x-icon">
 </head>
 <body>
     <header>

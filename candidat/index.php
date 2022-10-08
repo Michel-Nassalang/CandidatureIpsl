@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/candidat.css">
     <title>Candidat</title>
+    <link rel="shortcut icon" href="../images/ipsl.ico" type="image/x-icon">
 </head>
 <body>
     <header>
@@ -91,8 +92,8 @@
     </div>
     <div class="container-fluid teneur mt-5"> 
         <!-- ----------------------------- -->
-        <?php if(isset($_GET["edition"]) && $_GET["edition"]==$compte['pseudo']){
-        ?> 
+    <?php if(isset($_GET["edition"]) && $_GET["edition"]==$compte['pseudo']){
+    ?> 
         <form action="" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-lg-8 col-md-7 col-sm-10">
@@ -338,7 +339,6 @@
                 $insertEmail->closeCursor();
             }
         }
-        header('Location: ../candidat/');
         }else{
         ?> 
         <div class="row">
