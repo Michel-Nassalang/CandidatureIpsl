@@ -37,8 +37,8 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <li class="nav-item active">
-                        <a class="nav-link" href="../">Acceuil<span class="sr-only">(current)</span></a>
-                    </li>
+                    <a class="nav-link" href="../">Acceuil<span class="sr-only">(current)</span></a>
+                </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="../candidat/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Candidat
@@ -109,11 +109,11 @@
                                     <?php 
                                 }elseif (file_exists($path2)) {
                                     ?>
-                                    <img src="../images/profils/<?= $path2 ?>" alt="" class="img-thumbnail">
+                                    <img src="<?= $path2 ?>" alt="" class="img-thumbnail">
                                     <?php 
                                 }elseif (file_exists($path3)) {
                                     ?>
-                                    <img src="../images/profils/<?= $path3 ?>" alt="" class="img-thumbnail">
+                                    <img src="<?= $path3 ?>" alt="" class="img-thumbnail">
                                     <?php 
                                 }else{
                                     ?>
@@ -197,6 +197,7 @@
                     if ($extension_fichier === 'png') {
                         move_uploaded_file($img, '../images/profils/'.basename("user_" . $_SESSION['pseudo'] . ".png"));
                         echo '<p>Merci d\'avoir ajouter votre photo de profil.</p>';
+
                     } else {
                         move_uploaded_file($img, '../images/profils/'.basename("user_" . $_SESSION['pseudo'] . ".jpg"));
                         echo '<p>Merci d\'avoir ajouter votre photo de profil.</p>';
@@ -339,6 +340,9 @@
                 $insertEmail->closeCursor();
             }
         }
+        if(isset($_POST['save'])){    
+            echo "<script type='text/javascript'>document.location.replace('../candidat/');</script>";
+        }
         }else{
         ?> 
         <div class="row">
@@ -355,11 +359,11 @@
                                     <?php 
                                 }elseif (file_exists($path2)) {
                                     ?>
-                                    <img src="../images/profils/<?= $path2 ?>" alt="" class="img-thumbnail">
+                                    <img src="<?= $path2 ?>" alt="" class="img-thumbnail">
                                     <?php 
                                 }elseif (file_exists($path3)) {
                                     ?>
-                                    <img src="../images/profils/<?= $path3 ?>" alt="" class="img-thumbnail">
+                                    <img src="<?= $path3 ?>" alt="" class="img-thumbnail">
                                     <?php 
                                 }else{
                                     ?>

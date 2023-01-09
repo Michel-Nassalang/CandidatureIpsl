@@ -70,13 +70,12 @@
         $pseudo = htmlspecialchars($_POST['pseudo']);
         $pass = htmlspecialchars($_POST['password']);
 
-        if(strpos($pseudo, '_Admin')===false){
-            $connexion = $db->prepare('SELECT * FROM candidat WHERE pseudo = :pseudo');
-            $connexion->execute([
-                        'pseudo' => $pseudo
-                    ]);
-            $compte = $connexion->fetch();
-            $ligne = $connexion->rowCount();
+        $connexion = $db->prepare('SELECT * FROM candidat WHERE pseudo = :pseudo');
+        $connexion->execute([
+                    'pseudo' => $pseudo
+                ]);
+        $compte = $connexion->fetch();
+        $ligne = $connexion->rowCount();
             ?>
             <div class="row align-items-center justify-content-center">
             <?php
@@ -87,6 +86,7 @@
                 {
                     $_SESSION['pseudo'] = $pseudo;
                     $_SESSION['id'] = $compte['id_candidat'];
+                    // setcookie('Compte candidature',"Candidature", time() + 60 * 60 * 24);
                     header('Location: ../');
                     $connexion->closeCursor();
                 }else{
@@ -103,41 +103,6 @@
                     </div>
                 <?php
             }
-        }else{
-            $connexion = $db->prepare('SELECT * FROM user WHERE pseudo = :pseudo');
-            $connexion->execute([
-                        'pseudo' => $pseudo
-                    ]);
-            $compte = $connexion->fetch();
-            $ligne = $connexion->rowCount();
-            ?>
-            <div class="row align-items-center justify-content-center">
-            <?php
-            if($ligne == 1)
-            {
-                $hash = $compte['password'];
-                if(password_verify($pass, $hash))
-                {
-                    $_SESSION['pseudo'] = $pseudo;
-                    $_SESSION['id'] = $compte['id_candidat'];
-                    setcookie('Compte candidature',"Candidature", time() + 60 * 60 * 24);
-                    header('Location: ../compte/');
-                    $connexion->closeCursor();
-                }else{
-                ?>
-                    <div class="erreur_code col-lg-4 col-md-6 col-sm-8">
-                        <p>Veuillez vérifier votre mot de passe.</p>
-                    </div>
-                <?php   
-                }
-            }else{
-                ?>
-                    <div class="erreur_code col-lg-4 col-md-6 col-sm-8">
-                        <p>Veuillez vérifier votre pseudo.</p>
-                    </div>
-                <?php
-            }
-        }
     }elseif(isset($_POST['pseudo']) && isset($_POST['password']) && empty($_POST['pseudo']) && empty($_POST['password']))
     {
 ?>

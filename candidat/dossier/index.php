@@ -110,16 +110,16 @@
                 ?> 
                     <form action="" method="post">
                         <div class="col-10 ml-5 form-group">
-                            <input type="text" name="email" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Email" : $dossier['email'] ?>" required>
+                            <input type="text" name="email" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Email" : $dossier['email'] ?>" value="<?= ($ligne_dossier!=1) ? "Email" : $dossier['email'] ?>" required>
                         </div>
                         <div class="col-10 ml-5 form-group">
-                            <input type="text" name="telephone" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Telephone" : $dossier['telephone'] ?>" required>
+                            <input type="text" name="telephone" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Telephone" : $dossier['telephone'] ?>" value="<?= ($ligne_dossier!=1) ? "Telephone" : $dossier['telephone'] ?>" required>
                         </div>
                         <div class="col-10 ml-5 form-group">
-                            <input type="text" name="adresse" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Adresse" : $dossier['adresse'] ?>" required>
+                            <input type="text" name="adresse" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Adresse" : $dossier['adresse'] ?>" value="<?= ($ligne_dossier!=1) ? "Adresse" : $dossier['adresse'] ?>" required>
                         </div>
                             <div class=" col-10 ml-5 form-group">
-                                <input type="text" name="centre" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Centre Examen" : $dossier['centre_examen'] ?>">
+                                <input type="text" name="centre" class="form-control" placeholder="<?= ($ligne_dossier!=1) ? "Centre Examen" : $dossier['centre_examen'] ?>" value="<?= ($ligne_dossier!=1) ? "Centre Examen" : $dossier['centre_examen'] ?>">
                             </div>
                         <div class="col-10 ml-5 form-group">
                             <input type="submit" name="subcoor" class="btn btn-primary"class="form-control">
@@ -143,6 +143,7 @@
                             "id" => $_SESSION['id']
                         ]);
                         $insertion_c->closeCursor();
+                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                     }
                 }else{
                     if(isset($_POST['email']) && isset($_POST['telephone']) && isset($_POST['adresse']) && isset($_POST['centre']) &&
@@ -161,6 +162,7 @@
                             "id" => $_SESSION['id']
                         ]);
                         $insertion_c->closeCursor();
+                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                     }
                 }
                 }else {
@@ -218,6 +220,7 @@
                                                     'id' => $_SESSION['id']
                                                 ]);
                                                 $insertion_extrait->closeCursor();
+                                                echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                             } else {
                                                 move_uploaded_file($img, '../../images/extraits/'.basename('extrait_'. $_SESSION['pseudo'] . '.jpg'));
                                                 $insertion_extrait = $db->prepare('INSERT INTO dossier(extrait_naissance, id_candidat) VALUES (:extrait, :id)');
@@ -226,6 +229,7 @@
                                                     'id' => $_SESSION['id']
                                                 ]);
                                                 $insertion_extrait->closeCursor();
+                                                echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                             }
                                         }
                                         else {
@@ -253,6 +257,7 @@
                                                 ]);
                                                 $insertion_extrait->closeCursor();
                                                 echo '<p>Extrait ajouté.</p>';
+                                                echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                             } else {
                                                 move_uploaded_file($img, '../../images/extraits/'.basename('extrait_'. $_SESSION['pseudo'] . '.jpg'));
                                                 $insertion_extrait = $db->prepare('UPDATE dossier SET extrait_naissance = :extrait WHERE id_candidat = :id');
@@ -262,6 +267,7 @@
                                                 ]);
                                                 $insertion_extrait->closeCursor();
                                                 echo '<p>Extrait mis à jour.</p>';
+                                                echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                             }
                                         }
                                         else {
@@ -281,7 +287,7 @@
                         <a href="?extrait=<?= $_SESSION['pseudo'] ?>" class="btn btn-secondary">Charger mon extrait </a>
                         <?php
                         }else{
-                            if($dossier['extrait_naissance'] !== NULL){
+                            if($dossier['extrait_naissance'] != NULL){
                         ?>
                         <div class="image">
                             <img class="img-fluid" src="../../images/extraits/<?= $dossier['extrait_naissance'] ?>" alt="">
@@ -355,6 +361,8 @@
                                         ]);
                                         $insertion_cursus->closeCursor();
                                         echo '<p>Cursus mis à jour</p>';
+                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
+                                                    
                                     }
                                 } else {
                                     ?>
@@ -425,6 +433,8 @@
                                                             'id' => $value['id_cursus']
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
+                                                    
                                                     } else {
                                                         move_uploaded_file($img, '../../images/bulletins/'.basename('bulletin_'.$value['classe']. $semestre.'_'. $_SESSION['pseudo'] . '.jpg'));
                                                         $insertion_bulletin = $db->prepare('UPDATE bulletin SET bulletin = :bulletin WHERE id_candidat = :id');
@@ -433,6 +443,8 @@
                                                             'id' => $value['id_cursus']
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
+                                                    
                                                     }
                                                 }
                                                 else {
@@ -505,11 +517,12 @@
                                                         move_uploaded_file($img, '../../images/bulletins/'.basename('bulletin_'. $value['classe']. $semestre.'_'.  $_SESSION['pseudo'] . '.png'));
                                                         $insertion_bulletin = $db->prepare('INSERT INTO bulletin(bulletin, semestre, id_cursus) VALUES (:bulletin, :semestre, :id)');
                                                         $insertion_bulletin->execute([
-                                                            'bulletin' => 'bulletin_'. $value['classe']. $semestre. '_'. $_SESSION['pseudo'] . '.jpg',
+                                                            'bulletin' => 'bulletin_'. $value['classe']. $semestre. '_'. $_SESSION['pseudo'] . '.png',
                                                             'semestre' => $semestre,
                                                             'id' => $value['id_cursus']
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                                     } else {
                                                         move_uploaded_file($img, '../../images/bulletins/'.basename('bulletin_'. $value['classe']. $semestre.'_'. $_SESSION['pseudo'] . '.jpg'));
                                                         $insertion_bulletin = $db->prepare('INSERT INTO bulletin(bulletin, semestre, id_cursus) VALUES (:bulletin, :semestre, :id)');
@@ -519,6 +532,7 @@
                                                             'id' => $value['id_cursus']
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                                     }
                                                 }
                                                 else {
@@ -574,6 +588,7 @@
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
                                                         echo '<p>Ajout de bulletin en png.</p>';
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                                     } else {
                                                         move_uploaded_file($img, '../../images/bulletins/'.basename('bulletin_'. $value['classe']. $semestre. '_'. $_SESSION['pseudo']. '.jpg'));
                                                         $insertion_bulletin = $db->prepare('INSERT INTO bulletin(bulletin, semestre, id_cursus) VALUES (:bulletin, :semestre, :id)');
@@ -584,6 +599,7 @@
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
                                                         echo '<p>Ajout de bulletin en jpg.</p>';
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                                     }
                                                 }
                                                 else {
@@ -612,6 +628,7 @@
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
                                                         echo '<p>Ajout de bulletin en png.</p>';
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                                     } else {
                                                         move_uploaded_file($img, '../../images/bulletins/'.basename('bulletin_'. $value['classe']. $semestre. '_'. $_SESSION['pseudo'] . '.jpg'));
                                                         $insertion_bulletin = $db->prepare('INSERT INTO bulletin(bulletin, semestre, id_cursus) VALUES (:bulletin, :semestre, :id)');
@@ -622,6 +639,7 @@
                                                         ]);
                                                         $insertion_bulletin->closeCursor();
                                                         echo '<p>Ajout de bulletin en jpg.</p>';
+                                                        echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                                     }
                                                 }
                                                 else {
@@ -683,18 +701,19 @@
                                     ]);
                                     $insertion_cursus->closeCursor();
                                     echo '<p>Cursus ajouté</p>';
+                                    echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
                                 }
                             } else {
                             ?>
                             <div class="renseign col-12">
-                                <a href="?curajout=<?= $_SESSION['pseudo'] ?>#cursusajout" class="btn btn-primary mt-4 mb-4">Renseigner une année d'étude</a>
+                                <a href="?curajout=<?= $_SESSION['pseudo'] ?>#cursusajout" class="btn btn-primary mt-4 mb-4">Renseigner une autre année d'étude</a>
                             </div>
                         <?php
                             }
                     } else {
                         ?>
                         <?php
-                            if (isset($_GET["curajout"]) && $_GET["curajout"]==$_SESSION['pseudo']) {
+                            if (isset($_GET["curajout"]) && ($_GET["curajout"] == $_SESSION['pseudo'])) {
                                 ?>
                                 <form action="" method="post" id="cursusajout">
                                     <div class="mx-5 mt-3 form-group">
@@ -714,6 +733,26 @@
                                     </div>
                                 </form>
                                 <?php
+
+                                if(isset($_POST['classe']) && isset($_POST['serie']) && isset($_POST['etablissement']) && isset($_POST['annee'])
+                                    && !empty($_POST['classe']) && !empty($_POST['serie']) && !empty($_POST['etablissement']) && !empty($_POST['annee'])){
+                                    $classe = htmlspecialchars($_POST['classe']);
+                                    $serie = htmlspecialchars($_POST['serie']);
+                                    $etablissement = htmlspecialchars($_POST['etablissement']);
+                                    $annee = htmlspecialchars($_POST['annee']);
+                                    $insertion_cursus = $db->prepare('INSERT INTO cursus(classe, serie, etablissement, annee, id_candidat) VALUES (:classe, :serie, :etablissement, :annee, :id)');
+                                    $insertion_cursus->execute([
+                                        'classe' => $classe,
+                                        'serie' => $serie,
+                                        'etablissement' => $etablissement,
+                                        'annee' => $annee,
+                                        'id' => $compte['id_candidat']
+                                    ]);
+                                    $insertion_cursus->closeCursor();
+                                    echo '<p>Cursus ajouté</p>';
+                                    echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
+                                }
+
                             } else {
                             ?>
                             <div class="renseign col-12">
@@ -758,13 +797,29 @@
                 <h2>Contactez nous</h2>
                 <form action="">
                     <div class="form-group">
-                        <input type="email" placeholder="Adresse mail" class="form-control" class="mail">
+                        <input type="email" name="email" placeholder="Adresse mail" class="form-control" class="mail">
                     </div>
                     <div class="form-group">
-                        <textarea cols="30" rows="5" class="form-control" placeholder="Votre message"></textarea>
+                        <textarea cols="30" rows="5" name="message" class="form-control" placeholder="Votre message"></textarea>
                     </div>
                     <input type="submit" value="Envoyez" class="btn btn-primary"class="submit_footer">
                 </form>
+                <?php 
+                        
+                    if(isset($_POST['email']) && isset($_POST['message']) && !empty($_POST['email']) && !empty($_POST['message']))
+                        {   
+                            $email = htmlspecialchars($_POST['email']);
+                            $message = htmlspecialchars($_POST['message']);
+                            $insertion = $db->prepare('INSERT INTO contact(email,message) 
+                            VALUES (:email ,:message)');
+                                $insertion->execute([
+                                    "email" => $email,
+                                    "message" => $message
+                                ]);
+                            echo "message envoye";
+                            echo "<script type='text/javascript'>document.location.replace('../dossier/');</script>";
+                        }
+                    ?>
             </div>
         </div>
         <div class="bottomfooter">

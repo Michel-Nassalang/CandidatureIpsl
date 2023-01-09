@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="css/style_index.css">
     <link rel="stylesheet" href="assets/bootstrap-4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
+    <!-- <link rel="stylesheet" href="css/themify-icons.css"> -->
+    <link rel="stylesheet" href="css/fontawesome/all.css">
     <title>Depot de Candidature IPSL</title>
     <link rel="shortcut icon" href="images/ipsl.ico" type="image/x-icon">
 </head>
@@ -122,14 +123,14 @@
                     <img src="images/ipsl.png" alt="" width="200" height="40" class="d-inline-block align-top"/>
                     <p>L’institut Polytechnique de Saint-Louis (IPSL), une école d’ingénieurs de l’Université Gaston Berger créée en 2012, a pour ambition de faire émerger dans la région nord un pôle d’ingénierie d’excellence de classe internationale.</p>
                     <div>
-                        <i class="ti-mobile" href='tel:(221) 77-111-22-36'>Telephone:+221 778261896 / +221 781252827</i></br>
-                        <i class="ti-email" href='mailto:ipsl@ugb.edu.sn'>Email: ipsl@ugb.edu.sn</i>
+                        <i class="fa-brands fa-facebook" href='tel:(221) 77-111-22-36'>Telephone:+221 778261896 / +221 781252827</i></br>
+                        <i class="fa-duotone fa-envelope" href='mailto:ipsl@ugb.edu.sn'>Email: ipsl@ugb.edu.sn</i>
                     </div>
                     <div class="liant">
-                        <i class="ti-facebook"></i>
-                        <i class="ti-twitter"></i>
-                        <i class="ti-instagram"></i>
-                        <i class="ti-linkedin"></i>
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-square-twitter"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
                     </div>
                 </div>
             </div>
@@ -145,7 +146,7 @@
             </div>
             <div class="col-lg-4 col-md-8 col-sm-10 contact">
                 <h2>Contactez nous</h2>
-                <form action="">
+                <form action="" method="post">
                     <div class="form-group">
                         <input type="email" placeholder="Adresse mail" class="form-control" class="mail">
                     </div>
@@ -156,6 +157,21 @@
                 </form>
             </div>
         </div>
+        <?php     
+                    if(isset($_POST['email']) && isset($_POST['message']) && !empty($_POST['email']) && !empty($_POST['message']))
+                        {   
+                            $email = htmlspecialchars($_POST['email']);
+                            $message = htmlspecialchars($_POST['message']);
+                            $insertion = $db->prepare('INSERT INTO contact(email,message) 
+                            VALUES (:email ,:message)');
+                                $insertion->execute([
+                                    "email" => $email,
+                                    "message" => $message
+                                ]);
+                            echo "message envoye";
+                            echo "<script type='text/javascript'>document.location.replace('index.php');</script>";
+                        }
+                    ?>
         <div class="bottomfooter">
             <a href=""> Copyright 2020</a>  
             <a href=""> Tous droits reservés 

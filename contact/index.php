@@ -143,6 +143,31 @@
                             </div>
                         </div>
                     </form>
+                    <!-- ------------------------------------------------ -->
+                    <?php 
+                        
+                        if(!empty($_POST['name']) && !empty($_POST['email']) &&!empty($_POST['subject']) 
+                        && !empty($_POST['phone']) && !empty($_POST['message']) && isset($_POST['name']) && isset($_POST['email']) &&isset($_POST['subject']) 
+                        && isset($_POST['phone']) && isset($_POST['message']))
+                        {   
+                            $name = htmlspecialchars($_POST['name']);
+                            $email = htmlspecialchars($_POST['email']);
+                            $subject = htmlspecialchars($_POST['subject']);
+                            $phone = htmlspecialchars($_POST['phone']);
+                            $message = htmlspecialchars($_POST['message']);
+                            $insertion = $db->prepare('INSERT INTO contact(nom,email,sujet,tel,message) 
+                            VALUES (:name ,:email ,:subject ,:phone ,:message)');
+                                $insertion->execute([
+                                    "name" => $name,
+                                    "email" => $email,
+                                    "subject" => $subject,
+                                    "phone" => $phone,
+                                    "message" => $message
+                                ]);
+                            echo "message envoye";
+                            echo "<script type='text/javascript'>document.location.replace('../contact/');</script>";
+                        }
+                    ?>
                 </div>
             </div>
         </div>
