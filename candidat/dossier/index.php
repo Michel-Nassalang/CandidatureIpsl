@@ -486,9 +486,15 @@
                                 <div class="d-flex align-items-center justify-content-center col-lg-4 col-md-8 col-sm-10" id="bulletin_<?= $value['id_cursus'] ?>">
                                 <?php
                                     ?>
-                                        <div class="col-lg-12 my-4">
-                                            <img class="img-fluid" src="../../images/bulletins/<?= $bulletin['bulletin'] ?>" alt="">
-                                        </div>
+                                            <div class="col-lg-12 my-4">
+                                                <a href="#pushUp_<?= $value['classe'].'_'?>"><img class="img-fluid" src="../../images/bulletins/<?= $bulletin['bulletin'] ?>" alt="Image du bulletin de <?= $value['classe'] ?>"></a>
+                                            </div>
+                                            <div class="pushUp" id="pushUp_<?= $value['classe'].'_'?>">
+                                                <div class="pushUp-inner">
+                                                    <a aria-label="image" class="pushUp-close" href="#travail"><img src="../../images/close.svg" alt=""></a>
+                                                    <div class="pushUp-content"><img class="pushUp-image" id="pushUp-image" src="../../images/bulletins/<?= $bulletin['bulletin'] ?>" alt=""></div>
+                                                </div>
+                                            </div>
                                 </div>
                                     <?php
                                     
